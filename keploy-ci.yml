@@ -1,0 +1,32 @@
+name: Keploy CI
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  keploy-test:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v2
+
+      - name: Set up Python
+        uses: actions/setup-python@v2
+        with:
+          python-version: '3.11'
+
+      - name: Install Dependencies
+        run: |
+          pip install flask
+
+      - name: Download Keploy
+        run: |
+          wget https://github.com/keploy/keploy/releases/download/v0.1.6/keploy_linux_amd64.tar.gz
+          tar -xvzf keploy_linux_amd64.tar.gz
+          chmod +x keploy
+
+      - name: Run Keploy Tests
+        run: ./keploy test --command "python app.py"
