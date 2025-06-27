@@ -1,0 +1,41 @@
+openapi: 3.0.0
+info:
+  title: Simple Menu API
+  version: 1.0.0
+paths:
+  /menu:
+    get:
+      summary: Get menu list
+      responses:
+        '200':
+          description: Successful response
+    post:
+      summary: Add new menu item
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                name:
+                  type: string
+                price:
+                  type: number
+                availability:
+                  type: string
+      responses:
+        '201':
+          description: Item created
+  /menu/{name}:
+    delete:
+      summary: Delete item by name
+      parameters:
+        - name: name
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Item deleted
